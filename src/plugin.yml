@@ -1,0 +1,9 @@
+## YAML Template.
+name: Messenger
+main: com.mahn42.bart4223.messenger.Messenger
+version: 0.1
+depend: [MAHN42-Framework]
+commands:
+   messenger_send:
+      description: Send Message to offline Player
+      usage: /messenger_send

@@ -76,7 +76,7 @@ public class CommandMessengerSend implements CommandExecutor {
         lMes.Sender = aSender;
         lMes.Recipient = aRecipient;
         lMes.Text = aMessage;
-        MessageDBSet lDB = Plugin.getDB("world");
+        MessageDBSet lDB = Plugin.getDB();
         lDB.addRecord(lMes);
     }
     

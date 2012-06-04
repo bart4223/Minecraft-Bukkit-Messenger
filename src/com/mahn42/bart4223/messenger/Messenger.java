@@ -31,7 +31,7 @@ public class Messenger extends JavaPlugin{
       this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
       getCommand("messenger_send").setExecutor(new CommandMessengerSend(this));
       log = this.getLogger();
-      getDB("world");
+      getDB();
     }
     
     
@@ -43,21 +43,15 @@ public class Messenger extends JavaPlugin{
     public void saveDB() { 
         if (fMessengerDB != null) {
             getLogger().info("Saving DB...");
-            for(MessageDBSet lDB : fMessengerDB.values()) {
-                lDB.save();
-            }
+            fMessengerDB.save();          
         }
     }
     
-    protected HashMap<String, MessageDBSet> fMessengerDB;
+    protected MessageDBSet fMessengerDB;
  
     
-    public MessageDBSet getDB(String aWorldName) {
+    public MessageDBSet getDB() {
         if (fMessengerDB == null) {
-            fMessengerDB = new HashMap<String, MessageDBSet>();
-        }
-        if (!fMessengerDB.containsKey(aWorldName)) {
-            //World lWorld = getServer().getWorld(aWorldName);
             File lFolder = getDataFolder();
             if (!lFolder.exists()) {
                 lFolder.mkdirs();
@@ -65,11 +59,10 @@ public class Messenger extends JavaPlugin{
             String lPath = lFolder.getPath();
             lPath = lPath + File.separatorChar + "messenger.csv";
             File lFile = new File(lPath);
-            MessageDBSet lDB = new MessageDBSet(lFile);
-            lDB.load();
-            getLogger().info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(lDB.size()).toString() + ")");
-            fMessengerDB.put(aWorldName, lDB);
+            fMessengerDB = new MessageDBSet(lFile);
+            fMessengerDB.load();
+            getLogger().info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(fMessengerDB.size()).toString() + ")");
         }
-        return fMessengerDB.get(aWorldName);
+        return fMessengerDB;
     }    
 }

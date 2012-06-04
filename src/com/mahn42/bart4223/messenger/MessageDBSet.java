@@ -4,6 +4,7 @@
  */
 package com.mahn42.bart4223.messenger;
 
+import com.mahn42.framework.DBRecord;
 import com.mahn42.framework.DBSet;
 import java.io.File;
 import java.util.ArrayList;
@@ -16,12 +17,9 @@ import org.bukkit.World;
  * @author Nils
  */
 public class MessageDBSet extends DBSet {
-
-    //protected World fWorld;
-    
+   
     public MessageDBSet(File aFile) {
         super(MessageDBRecord.class, aFile);
-        //fWorld = aWorld;
     }
     
     public ArrayList<Message> getPlayerMessages(String aPlayerName){

@@ -23,10 +23,10 @@ public class PlayerListener implements Listener{
    }    
    
    @EventHandler
-   public void playerJoin(PlayerJoinEvent event) {
+   public void playerLogin(PlayerJoinEvent event) {
      String lFromPlayer = "";
      Player lPlayer = event.getPlayer();
-     MessageDBSet lDB = fMessenger.getDB("world");
+     MessageDBSet lDB = fMessenger.getDB();
      ArrayList<Message> lMsgs = lDB.getPlayerMessages(lPlayer.getName());
      for (Message lMsg : lMsgs) {
         if (!lFromPlayer.equals(lMsg.Sender)) {

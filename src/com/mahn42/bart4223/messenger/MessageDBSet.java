@@ -17,11 +17,11 @@ import org.bukkit.World;
  */
 public class MessageDBSet extends DBSet {
 
-    protected World fWorld;
+    //protected World fWorld;
     
-    public MessageDBSet(World aWorld, File aFile) {
+    public MessageDBSet(File aFile) {
         super(MessageDBRecord.class, aFile);
-        fWorld = aWorld;
+        //fWorld = aWorld;
     }
     
     public ArrayList<Message> getPlayerMessages(String aPlayerName){

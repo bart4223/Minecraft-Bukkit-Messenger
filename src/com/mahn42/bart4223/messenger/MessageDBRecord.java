@@ -5,9 +5,7 @@
 package com.mahn42.bart4223.messenger;
 
 import com.mahn42.framework.DBRecord;
-import com.mahn42.framework.DBSet;
 import java.util.ArrayList;
-import org.bukkit.World;
 
 /**
  *
@@ -15,7 +13,7 @@ import org.bukkit.World;
  */
 public class MessageDBRecord extends DBRecord{
  
-        public String Sender;
+    public String Sender;
     public String Recipient;
     public String Text;
 
@@ -34,14 +32,4 @@ public class MessageDBRecord extends DBRecord{
      Recipient = aCols.pop();
      Text = aCols.pop();   
     }
-    
-    protected World fWorld;
-    @Override
-    protected void added(DBSet aSet) {
-        super.added(aSet);
-        if (aSet instanceof MessageDBSet) {
-            fWorld = ((MessageDBSet)aSet).fWorld;
-        }
-    } 
-    
 }

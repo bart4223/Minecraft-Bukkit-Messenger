@@ -57,15 +57,15 @@ public class Messenger extends JavaPlugin{
             fMessengerDB = new HashMap<String, MessageDBSet>();
         }
         if (!fMessengerDB.containsKey(aWorldName)) {
-            World lWorld = getServer().getWorld(aWorldName);
+            //World lWorld = getServer().getWorld(aWorldName);
             File lFolder = getDataFolder();
             if (!lFolder.exists()) {
                 lFolder.mkdirs();
             }
             String lPath = lFolder.getPath();
-            lPath = lPath + File.separatorChar + aWorldName + "_messenger.csv";
+            lPath = lPath + File.separatorChar + "messenger.csv";
             File lFile = new File(lPath);
-            MessageDBSet lDB = new MessageDBSet(lWorld, lFile);
+            MessageDBSet lDB = new MessageDBSet(lFile);
             lDB.load();
             getLogger().info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(lDB.size()).toString() + ")");
             fMessengerDB.put(aWorldName, lDB);

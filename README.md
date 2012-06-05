@@ -11,10 +11,10 @@ Nachrichten.
 Kommandos
 ---------
 
-* messenger_send @[Spielername] [Farbcode][Nachricht]     Sendet eine Nachricht an einen konkreten Spieler.
-* messenger_send @all [Farbcode][Nachricht]               Sendet eine Nachricht an alle registrierten Spieler.
-* messenger_recall @[Spielername]                         Ruft alle Nachrichten für einen konkreten Spieler zurück.
-* messenger_recall @all                                   Ruft alle Nachrichten für alle registrierten Spieler zurück.
+* messenger_send @[Spielername] [Farbcode][Nachricht] = Sendet eine Nachricht an einen konkreten Spieler.
+* messenger_send @all [Farbcode][Nachricht]           = Sendet eine Nachricht an alle registrierten Spieler.
+* messenger_recall @[Spielername]                     = Ruft alle Nachrichten für einen konkreten Spieler zurück.
+* messenger_recall @all                               = Ruft alle Nachrichten für alle registrierten Spieler zurück.
 
 Farbcodes
 ---------

@@ -16,8 +16,8 @@ Kommandos
 * messenger_recall @[Spielername]                         Ruft alle Nachrichten für einen konkreten Spieler zurück.
 * messenger_recall @all                                   Ruft alle Nachrichten für alle registrierten Spieler zurück.
 
-Farbcode
---------
+Farbcodes
+---------
 * &1 = Blau
 * &2 = Rot
 * &3 = Grün
@@ -31,6 +31,6 @@ Farbcode
 Konfiguration
 -------------
 In der config.yml kann man folgende Werte hinterlegen
-* MaxMessages     Maximale Anzahl von Nachrichten die ein Spieler mit einmal erhalten kann.
+* MaxMessages             Maximale Anzahl von Nachrichten die ein Spieler mit einmal erhalten kann.
 
 

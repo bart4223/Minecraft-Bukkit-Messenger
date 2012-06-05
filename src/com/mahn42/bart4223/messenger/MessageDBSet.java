@@ -39,15 +39,33 @@ public class MessageDBSet extends DBSet {
         return lResult;
     }
     
-    public void removePlayerMessages(String aPlayerName) {
+    public void removePlayerMessages(String aRecipient) {
         for (Iterator<MessageDBRecord> it = this.iterator(); it.hasNext();) {
             MessageDBRecord lMsgDB = it.next();
-            if (aPlayerName.equals(lMsgDB.Recipient)) {
+            if (aRecipient.equals(lMsgDB.Recipient)) {
                 it.remove();
             }
         }
     }
     
+    public void removePlayerMessagesFrom(String aSender) {
+        for (Iterator<MessageDBRecord> it = this.iterator(); it.hasNext();) {
+            MessageDBRecord lMsgDB = it.next();
+            if (aSender.equals(lMsgDB.Sender)) {
+                it.remove();
+            }
+        }
+    }
+
+    public void removePlayerMessagesFrom(String aSender, String aRecipient) {
+        for (Iterator<MessageDBRecord> it = this.iterator(); it.hasNext();) {
+            MessageDBRecord lMsgDB = it.next();
+            if (aSender.equals(lMsgDB.Sender) && aRecipient.equals(lMsgDB.Recipient)) {
+                it.remove();
+            }
+        }
+    }
+
     public boolean MaxPlayerMessagesAchieved(String aPlayerName) {
         ArrayList<Message> lMsgs = getPlayerMessages(aPlayerName);
         return lMsgs.size() >= fPlugin.configMaxMessages; 

@@ -7,3 +7,6 @@ commands:
    messenger_send:
       description: Send Message to offline Player
       usage: /messenger_send
+   messenger_recall:
+      description: Recall Message to offline Player
+      usage: /messenger_recall      

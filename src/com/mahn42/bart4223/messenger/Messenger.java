@@ -7,6 +7,7 @@ package com.mahn42.bart4223.messenger;
 
 import java.io.File;
 import java.util.logging.Logger;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,8 +30,9 @@ public class Messenger extends JavaPlugin{
     
     @Override
     public void onEnable() {
-      this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+      getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
       getCommand("messenger_send").setExecutor(new CommandMessengerSend(this));
+      getCommand("messenger_recall").setExecutor(new CommandMessengerRecall(this));
       log = this.getLogger();
       readMessengerConfig();
       getDB();
@@ -43,7 +45,7 @@ public class Messenger extends JavaPlugin{
      
     public void saveDB() { 
         if (fMessengerDB != null) {
-            getLogger().info("Saving DB...");
+            log.info("Saving DB...");
             fMessengerDB.save();          
         }
     }
@@ -59,7 +61,7 @@ public class Messenger extends JavaPlugin{
             File lFile = new File(lPath);
             fMessengerDB = new MessageDBSet(lFile,this);
             fMessengerDB.load();
-            getLogger().info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(fMessengerDB.size()).toString() + ")");
+            log.info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(fMessengerDB.size()).toString() + ")");
         }
         return fMessengerDB;
     }    
@@ -71,4 +73,17 @@ public class Messenger extends JavaPlugin{
         configMaxMessages = lConfig.getInt("MaxMessages");
     }
  
+    public boolean VerifyRecipient(String aRecipient) {
+      boolean lOK = aRecipient.equals("@all");
+      if (!lOK && aRecipient.startsWith("@")) {
+        String lRecipient = aRecipient.substring(1, aRecipient.length());
+        OfflinePlayer[] offPlayers = getServer().getOfflinePlayers();
+        for (OfflinePlayer lOffPlayer : offPlayers) {
+          lOK = (lOffPlayer.getName().equals(lRecipient));
+          if (lOK) break;  
+          }
+      }
+      return lOK;
+    }
+    
 }

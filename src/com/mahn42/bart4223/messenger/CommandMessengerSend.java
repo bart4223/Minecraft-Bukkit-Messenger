@@ -4,6 +4,7 @@
  */
 package com.mahn42.bart4223.messenger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,12 +31,12 @@ public class CommandMessengerSend implements CommandExecutor {
             Player lPlayer = (Player) aCommandSender;
             for (String lstr : aStrings) {
                 if (lRecipient.length() == 0) {
-                    if (VerifyRecipient(lstr)) {
+                    if (Plugin.VerifyRecipient(lstr)) {
                         lRecipient = lstr.substring(1, lstr.length());
                     }
                     else {
                         lRecipient = "?";
-                        lPlayer.sendMessage("No valid Recipient!");
+                        lPlayer.sendMessage(ChatColor.RED.toString() + "No valid Recipient!");
                 
                     }
                 }
@@ -48,35 +49,22 @@ public class CommandMessengerSend implements CommandExecutor {
             }
             if (lRecipient.equals("all")) {
                 SendMessageToAll(lPlayer.getName(), lMsg);
-                lPlayer.sendMessage("Message sent to all...");
+                lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to all...");
                 Plugin.saveDB();
             }
             else if (!lRecipient.equals("?")) {
                 boolean lOK = SendMessage(lPlayer.getName(), lRecipient, lMsg);
                 if (lOK) {
-                    lPlayer.sendMessage("Message sent to " + lRecipient + "...");
+                    lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to " + lRecipient + "...");
                     Plugin.saveDB();
                 }
                 else
-                    lPlayer.sendMessage("Message not sent to " + lRecipient + "!");
+                    lPlayer.sendMessage(ChatColor.RED.toString() + "Message not sent to " + lRecipient + "!");
             }
         }
         return true;
     }
-    
-    protected boolean VerifyRecipient(String aRecipient) {
-        boolean lOK = aRecipient.equals("@all");
-        if (!lOK && aRecipient.startsWith("@")) {
-            String lRecipient = aRecipient.substring(1, aRecipient.length());
-            OfflinePlayer[] offPlayers = Plugin.getServer().getOfflinePlayers();
-            for (OfflinePlayer lOffPlayer : offPlayers) {
-                lOK = (lOffPlayer.getName().equals(lRecipient));
-                if (lOK) break;  
-            }
-        }
-        return lOK;
-    }
-    
+       
     protected boolean SendMessage(String aSender, String aRecipient, String aMessage) {
         if (!Plugin.getDB().MaxPlayerMessagesAchieved(aRecipient)) {
             MessageDBRecord lMes = new MessageDBRecord();

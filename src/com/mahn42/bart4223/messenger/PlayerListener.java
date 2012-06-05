@@ -36,6 +36,7 @@ public class PlayerListener implements Listener{
         lPlayer.sendMessage(lMsg.Text);
      }
      lDB.removePlayerMessages(lPlayer.getName());
+     lDB.save();
    }
    
 }

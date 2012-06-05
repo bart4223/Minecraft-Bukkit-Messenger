@@ -6,9 +6,8 @@ package com.mahn42.bart4223.messenger;
 
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.logging.Logger;
-import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -24,32 +23,31 @@ public class Messenger extends JavaPlugin{
     public static void main(String[] args) {
     }
     
-    public Logger log;
+    public Logger log;   
+    
+    public int configMaxMessages = 10;
     
     @Override
     public void onEnable() {
       this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
       getCommand("messenger_send").setExecutor(new CommandMessengerSend(this));
       log = this.getLogger();
+      readMessengerConfig();
       getDB();
     }
-    
     
     @Override
     public void onDisable() { 
       saveDB();
     }
- 
+     
     public void saveDB() { 
         if (fMessengerDB != null) {
             getLogger().info("Saving DB...");
             fMessengerDB.save();          
         }
     }
-    
-    protected MessageDBSet fMessengerDB;
- 
-    
+     
     public MessageDBSet getDB() {
         if (fMessengerDB == null) {
             File lFolder = getDataFolder();
@@ -59,10 +57,18 @@ public class Messenger extends JavaPlugin{
             String lPath = lFolder.getPath();
             lPath = lPath + File.separatorChar + "messenger.csv";
             File lFile = new File(lPath);
-            fMessengerDB = new MessageDBSet(lFile);
+            fMessengerDB = new MessageDBSet(lFile,this);
             fMessengerDB.load();
             getLogger().info("Datafile " + lFile.toString() + " loaded. (Records:" + new Integer(fMessengerDB.size()).toString() + ")");
         }
         return fMessengerDB;
     }    
+
+    protected MessageDBSet fMessengerDB;
+       
+    protected void readMessengerConfig() {
+        FileConfiguration lConfig = getConfig();
+        configMaxMessages = lConfig.getInt("MaxMessages");
+    }
+ 
 }

@@ -49,10 +49,16 @@ public class CommandMessengerSend implements CommandExecutor {
             if (lRecipient.equals("all")) {
                 SendMessageToAll(lPlayer.getName(), lMsg);
                 lPlayer.sendMessage("Message sent to all...");
+                Plugin.saveDB();
             }
             else if (!lRecipient.equals("?")) {
-                SendMessage(lPlayer.getName(), lRecipient, lMsg);
-                lPlayer.sendMessage("Message sent to " + lRecipient + "...");
+                boolean lOK = SendMessage(lPlayer.getName(), lRecipient, lMsg);
+                if (lOK) {
+                    lPlayer.sendMessage("Message sent to " + lRecipient + "...");
+                    Plugin.saveDB();
+                }
+                else
+                    lPlayer.sendMessage("Message not sent to " + lRecipient + "!");
             }
         }
         return true;
@@ -71,13 +77,17 @@ public class CommandMessengerSend implements CommandExecutor {
         return lOK;
     }
     
-    protected void SendMessage(String aSender, String aRecipient, String aMessage) {
-        MessageDBRecord lMes = new MessageDBRecord();
-        lMes.Sender = aSender;
-        lMes.Recipient = aRecipient;
-        lMes.Text = aMessage;
-        MessageDBSet lDB = Plugin.getDB();
-        lDB.addRecord(lMes);
+    protected boolean SendMessage(String aSender, String aRecipient, String aMessage) {
+        if (!Plugin.getDB().MaxPlayerMessagesAchieved(aRecipient)) {
+            MessageDBRecord lMes = new MessageDBRecord();
+            lMes.Sender = aSender;
+            lMes.Recipient = aRecipient;
+            lMes.Text = aMessage;
+            MessageDBSet lDB = Plugin.getDB();
+            lDB.addRecord(lMes);
+            return true;
+        }
+        else return false;
     }
     
     protected void SendMessageToAll(String aSender, String aMessage) {

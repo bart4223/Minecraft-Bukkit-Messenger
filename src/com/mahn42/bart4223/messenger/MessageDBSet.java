@@ -17,9 +17,12 @@ import org.bukkit.World;
  * @author Nils
  */
 public class MessageDBSet extends DBSet {
-   
-    public MessageDBSet(File aFile) {
+
+   protected Messenger fPlugin;
+    
+    public MessageDBSet(File aFile, Messenger aPlugin) {
         super(MessageDBRecord.class, aFile);
+        fPlugin = aPlugin;
     }
     
     public ArrayList<Message> getPlayerMessages(String aPlayerName){
@@ -43,6 +46,11 @@ public class MessageDBSet extends DBSet {
                 it.remove();
             }
         }
+    }
+    
+    public boolean MaxPlayerMessagesAchieved(String aPlayerName) {
+        ArrayList<Message> lMsgs = getPlayerMessages(aPlayerName);
+        return lMsgs.size() >= fPlugin.configMaxMessages; 
     }
     
 }

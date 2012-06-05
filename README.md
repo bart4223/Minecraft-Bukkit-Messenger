@@ -31,6 +31,6 @@ Farbcodes
 Konfiguration
 -------------
 In der config.yml kann man folgende Werte hinterlegen
-* MaxMessages             Maximale Anzahl von Nachrichten die ein Spieler mit einmal erhalten kann.
+* MaxMessages = Maximale Anzahl von Nachrichten die ein Spieler mit einmal erhalten kann.
 
 

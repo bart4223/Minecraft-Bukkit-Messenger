@@ -8,6 +8,10 @@ Dieses Minecraft-Bukkit-Plugin dient zum Versenden von Nachrichten an Spieler di
 Es funktioniert mit Kommandos im Chat. Nach dem Einloggen erhält der jeweilige Spieler die für ihn bestimmten
 Nachrichten.
 
+Vorraussetzungen
+----------------
+* Es muss das Minecraft-Bukkit-Mahn42-Framework Plugin installiert sein.
+
 Kommandos
 ---------
 

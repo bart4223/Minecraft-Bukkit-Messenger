@@ -10,3 +10,9 @@ commands:
    messenger_recall:
       description: Recall Message to offline Player
       usage: /messenger_recall      
+   messenger_listgroups:
+      description: List messenger groups 
+      usage: /messenger_listgroups 
+   messenger_listgroupusers:
+      description: List messenger group users 
+      usage: /messenger_listgroupusers 

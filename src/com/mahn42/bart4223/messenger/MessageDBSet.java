@@ -4,13 +4,11 @@
  */
 package com.mahn42.bart4223.messenger;
 
-import com.mahn42.framework.DBRecord;
 import com.mahn42.framework.DBSet;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import org.bukkit.World;
 
 /**
  *
@@ -18,11 +16,10 @@ import org.bukkit.World;
  */
 public class MessageDBSet extends DBSet {
 
-   protected Messenger fPlugin;
+    protected int MaxMessages;
     
-    public MessageDBSet(File aFile, Messenger aPlugin) {
+    public MessageDBSet(File aFile) {
         super(MessageDBRecord.class, aFile);
-        fPlugin = aPlugin;
     }
     
     public ArrayList<Message> getPlayerMessages(String aPlayerName){
@@ -68,7 +65,7 @@ public class MessageDBSet extends DBSet {
 
     public boolean MaxPlayerMessagesAchieved(String aPlayerName) {
         ArrayList<Message> lMsgs = getPlayerMessages(aPlayerName);
-        return lMsgs.size() >= fPlugin.configMaxMessages; 
+        return lMsgs.size() >= MaxMessages; 
     }
     
 }

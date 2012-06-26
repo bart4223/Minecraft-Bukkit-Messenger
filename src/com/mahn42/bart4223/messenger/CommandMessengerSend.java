@@ -28,16 +28,19 @@ public class CommandMessengerSend implements CommandExecutor {
         if (aCommandSender instanceof Player) {
             String lMsg = "";
             String lRecipient = "";
+            String lRecipientGrp = "";
             Player lPlayer = (Player) aCommandSender;
             for (String lstr : aStrings) {
-                if (lRecipient.length() == 0) {
+                if (lRecipient.length() == 0 && lRecipientGrp.length() == 0 ) {
                     if (Plugin.VerifyRecipient(lstr)) {
                         lRecipient = lstr.substring(1, lstr.length());
+                    }
+                    else if (Plugin.VerifyGroup(lstr.substring(1, lstr.length()))) {
+                        lRecipientGrp = lstr.substring(1, lstr.length());
                     }
                     else {
                         lRecipient = "?";
                         lPlayer.sendMessage(ChatColor.RED.toString() + "No valid Recipient!");
-                
                     }
                 }
                 else {
@@ -47,7 +50,12 @@ public class CommandMessengerSend implements CommandExecutor {
                         lMsg = lMsg + " " + lstr;
                 }
             }
-            if (lRecipient.equals("all")) {
+            if (lRecipientGrp.length() != 0) {
+                SendMessageToGroup(lPlayer.getName(), lRecipientGrp, lMsg);
+                lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to group " + lRecipientGrp + "...");
+                Plugin.saveDB();
+            }
+            else if (lRecipient.equals("all")) {
                 SendMessageToAll(lPlayer.getName(), lMsg);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to all...");
                 Plugin.saveDB();
@@ -85,4 +93,11 @@ public class CommandMessengerSend implements CommandExecutor {
         }
     }
 
+    protected void SendMessageToGroup(String aSender, String aGroup, String aMessage) {
+        Group lGroup = Plugin.GetGroup(aGroup);
+        for (GroupUser lGroupuser : lGroup.Users) {
+            SendMessage(aSender, lGroupuser.Name, aMessage);
+        }
+    }
+    
 }

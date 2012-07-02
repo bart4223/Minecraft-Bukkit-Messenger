@@ -15,10 +15,12 @@ Vorraussetzungen
 Kommandos
 ---------
 
-* messenger_send @[Spielername] [Farbcode][Nachricht] = Sendet eine Nachricht an einen konkreten Spieler.
-* messenger_send @all [Farbcode][Nachricht]           = Sendet eine Nachricht an alle registrierten Spieler.
-* messenger_recall @[Spielername]                     = Ruft alle Nachrichten für einen konkreten Spieler zurück.
-* messenger_recall @all                               = Ruft alle Nachrichten für alle registrierten Spieler zurück.
+* messenger_send @[Spielername,Gruppe] [Farbcode][Nachricht] = Sendet eine Nachricht an einen Spieler/Gruppe.
+* messenger_send @all [Farbcode][Nachricht]                  = Sendet eine Nachricht an alle registrierten Spieler.
+* messenger_recall @[Spielername]                            = Ruft alle Nachrichten für einen konkreten Spieler zurück.
+* messenger_recall @all                                      = Ruft alle Nachrichten für alle registrierten Spieler zurück.
+* messenger_listgroups                                       = Listet alle Nachrichtengruppen auf.
+* messenger_listgroupusers [Gruppe]                          = Listet die in einer Gruppe enthaltenen Spieler auf
 
 Farbcodes
 ---------
@@ -37,6 +39,16 @@ Konfiguration
 In der config.yml kann man folgende Werte hinterlegen:
 * MaxMessages = Maximale Anzahl von Nachrichten die ein Spieler mit einmal erhalten kann.
 
-Ideen
------
-* Gruppen definieren, welche Nachrichten erhalten können.
+Gruppen
+-------
+In der groups.yml können verschiedene Gruppen und deren zugehörigen Spieler eingetragen werden.
+Besipiel:
+Groups:
+  - Name 123
+    Users:
+        - ABC
+        - DEF
+  - Name 456
+    Users:
+        - GHI
+        - JKL

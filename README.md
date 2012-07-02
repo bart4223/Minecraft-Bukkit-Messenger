@@ -15,11 +15,11 @@ Vorraussetzungen
 Kommandos
 ---------
 
-* messenger_send @[Spielername,Gruppe] [Farbcode][Nachricht] = Sendet eine Nachricht an einen Spieler/Gruppe.
+* messenger_send @[Spielername,Gruppe] [Farbcode][Nachricht] = Sendet eine Nachricht an einen Spieler oder eine Gruppe.
 * messenger_send @all [Farbcode][Nachricht]                  = Sendet eine Nachricht an alle registrierten Spieler.
-* messenger_recall @[Spielername]                            = Ruft alle Nachrichten für einen konkreten Spieler zurück.
+* messenger_recall @[Spielername]                            = Ruft alle Nachrichten für einen Spieler zurück.
 * messenger_recall @all                                      = Ruft alle Nachrichten für alle registrierten Spieler zurück.
-* messenger_listgroups                                       = Listet alle Nachrichtengruppen auf.
+* messenger_listgroups                                       = Listet alle Gruppen auf.
 * messenger_listgroupusers [Gruppe]                          = Listet die in einer Gruppe enthaltenen Spieler auf.
 
 Farbcodes

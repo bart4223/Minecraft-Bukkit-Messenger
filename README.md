@@ -20,7 +20,7 @@ Kommandos
 * messenger_recall @[Spielername]                            = Ruft alle Nachrichten für einen konkreten Spieler zurück.
 * messenger_recall @all                                      = Ruft alle Nachrichten für alle registrierten Spieler zurück.
 * messenger_listgroups                                       = Listet alle Nachrichtengruppen auf.
-* messenger_listgroupusers [Gruppe]                          = Listet die in einer Gruppe enthaltenen Spieler auf
+* messenger_listgroupusers [Gruppe]                          = Listet die in einer Gruppe enthaltenen Spieler auf.
 
 Farbcodes
 ---------
@@ -42,13 +42,3 @@ In der config.yml kann man folgende Werte hinterlegen:
 Gruppen
 -------
 In der groups.yml können verschiedene Gruppen und deren zugehörigen Spieler eingetragen werden.
-Besipiel:
-Groups:
-  - Name 123
-    Users:
-        - ABC
-        - DEF
-  - Name 456
-    Users:
-        - GHI
-        - JKL

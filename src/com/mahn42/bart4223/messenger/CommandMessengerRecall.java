@@ -26,11 +26,15 @@ public class CommandMessengerRecall implements CommandExecutor {
     public boolean onCommand(CommandSender aCommandSender, Command aCommand, String aString, String[] aStrings) {
         if (aCommandSender instanceof Player) {
             String lRecipient = "";
+            String lRecipientGrp = "";
             Player lPlayer = (Player) aCommandSender;
             for (String lstr : aStrings) {
-                if (lRecipient.length() == 0) {
+                if (lRecipient.length() == 0 && lRecipientGrp.length() == 0 ) {
                     if (Plugin.VerifyRecipient(lstr)) {
                         lRecipient = lstr.substring(1, lstr.length());
+                    }
+                    else if (Plugin.VerifyGroup(lstr.substring(1, lstr.length()))) {
+                        lRecipientGrp = lstr.substring(1, lstr.length());
                     }
                     else {
                         lRecipient = "?";
@@ -39,7 +43,15 @@ public class CommandMessengerRecall implements CommandExecutor {
                 }
                 else break;
             }
-            if (lRecipient.equals("all")) {
+            if (lRecipientGrp.length() != 0) {
+                Group lGroup = Plugin.GetGroup(lRecipientGrp);
+                for (GroupUser lGroupuser : lGroup.Users) {
+                    Plugin.getDB().removePlayerMessagesFrom(lGroupuser.Name);
+                }
+                lPlayer.sendMessage(ChatColor.GREEN.toString() + "Messages recalled from group " + lRecipientGrp + "...");
+                Plugin.saveDB();
+            }
+            else if (lRecipient.equals("all")) {
                 Plugin.getDB().removePlayerMessagesFrom(lPlayer.getName());
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "All Messages recalled...");
                 Plugin.saveDB();

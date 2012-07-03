@@ -1,7 +1,7 @@
 ## YAML Template.
 name: Messenger
 main: com.mahn42.bart4223.messenger.Messenger
-version: 0.1
+version: 0.7
 depend: [MAHN42-Framework]
 commands:
    messenger_send:

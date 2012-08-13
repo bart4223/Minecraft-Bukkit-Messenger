@@ -42,3 +42,15 @@ In der config.yml kann man folgende Werte hinterlegen:
 Gruppen
 -------
 In der groups.yml können verschiedene Gruppen und deren zugehörigen Spieler eingetragen werden.
+Ein Beispiel hierfür ist:
+    Groups:
+     - Name: ABC
+       Users:
+         - player1
+         - player2
+     - Name: DEF
+       Users:
+         - player1
+     - Name: GHI
+       Users:
+         - player2

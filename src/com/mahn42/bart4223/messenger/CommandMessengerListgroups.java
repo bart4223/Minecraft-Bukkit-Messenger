@@ -16,10 +16,8 @@ import org.bukkit.entity.Player;
  */
 public class CommandMessengerListgroups implements CommandExecutor {
 
-    public Messenger Plugin;
-    
-    public CommandMessengerListgroups(Messenger aPlugin) {
-        Plugin = aPlugin;
+    public CommandMessengerListgroups(MessageManager aMessageManager) {
+        fMessageManager = aMessageManager;
     }
 
     @Override
@@ -27,10 +25,13 @@ public class CommandMessengerListgroups implements CommandExecutor {
         if (aCommandSender instanceof Player) {
             Player lPlayer = (Player) aCommandSender;
             lPlayer.sendMessage(ChatColor.GRAY.toString() + "Messenger Groups");
-            for (Group lGrp : Plugin.Groups) {
+            for (Group lGrp : fMessageManager.Groups) {
                 lPlayer.sendMessage(ChatColor.DARK_GRAY.toString() + lGrp.Name);
             }
         }
         return true;
     }
+
+    protected MessageManager fMessageManager;
+    
 }

@@ -16,10 +16,8 @@ import org.bukkit.entity.Player;
  */
 public class CommandMessengerRecall implements CommandExecutor {
  
-    public Messenger Plugin;
-    
-    public CommandMessengerRecall(Messenger aPlugin) {
-        Plugin = aPlugin;
+    public CommandMessengerRecall(MessageManager aMessageManager) {
+        fMessageManager = aMessageManager;
     }
     
     @Override
@@ -30,10 +28,10 @@ public class CommandMessengerRecall implements CommandExecutor {
             Player lPlayer = (Player) aCommandSender;
             for (String lstr : aStrings) {
                 if (lRecipient.length() == 0 && lRecipientGrp.length() == 0 ) {
-                    if (Plugin.VerifyRecipient(lstr)) {
+                    if (fMessageManager.VerifyRecipient(lstr)) {
                         lRecipient = lstr.substring(1, lstr.length());
                     }
-                    else if (Plugin.VerifyGroup(lstr.substring(1, lstr.length()))) {
+                    else if (fMessageManager.VerifyGroup(lstr.substring(1, lstr.length()))) {
                         lRecipientGrp = lstr.substring(1, lstr.length());
                     }
                     else {
@@ -41,28 +39,26 @@ public class CommandMessengerRecall implements CommandExecutor {
                         lPlayer.sendMessage(ChatColor.RED.toString() + "No valid Recipient!");
                     }
                 }
-                else break;
+                else {
+                    break;
+                }
             }
             if (lRecipientGrp.length() != 0) {
-                Group lGroup = Plugin.GetGroup(lRecipientGrp);
-                for (GroupUser lGroupuser : lGroup.Users) {
-                    Plugin.getDB().removePlayerMessagesFrom(lGroupuser.Name);
-                }
+                fMessageManager.removePlayerMessagesFrom(lPlayer.getName(), lRecipientGrp);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "Messages recalled from group " + lRecipientGrp + "...");
-                Plugin.saveDB();
             }
             else if (lRecipient.equals("all")) {
-                Plugin.getDB().removePlayerMessagesFrom(lPlayer.getName());
+                fMessageManager.removePlayerMessagesFrom(lPlayer.getName());
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "All Messages recalled...");
-                Plugin.saveDB();
             }
             else if (!lRecipient.equals("?")) {
-                Plugin.getDB().removePlayerMessagesFrom(lPlayer.getName(),lRecipient);
+                fMessageManager.removePlayerMessagesFrom(lPlayer.getName(),lRecipient);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "All Messages to " + lRecipient + " recalled...");
-                Plugin.saveDB();
             }
         }
         return true;
     }
+    
+    protected MessageManager fMessageManager;
     
 }

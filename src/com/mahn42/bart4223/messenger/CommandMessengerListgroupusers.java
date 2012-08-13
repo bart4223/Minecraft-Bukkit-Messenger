@@ -15,11 +15,9 @@ import org.bukkit.entity.Player;
  * @author Nils
  */
 public class CommandMessengerListgroupusers implements CommandExecutor{
-
-    public Messenger Plugin;
     
-    public CommandMessengerListgroupusers(Messenger aPlugin) {
-        Plugin = aPlugin;
+    public CommandMessengerListgroupusers(MessageManager aMessageManager) {
+        fMessageManager = aMessageManager;
     }
 
     @Override
@@ -28,8 +26,8 @@ public class CommandMessengerListgroupusers implements CommandExecutor{
             Player lPlayer = (Player) aCommandSender;
             Group lGroup = null;
             for (String lstr : aStrings) {
-                if (lGroup == null && Plugin.VerifyGroup(lstr)) {
-                    lGroup = Plugin.GetGroup(lstr);
+                if (lGroup == null && fMessageManager.VerifyGroup(lstr)) {
+                    lGroup = fMessageManager.GetGroup(lstr);
                     lPlayer.sendMessage(ChatColor.GRAY.toString() + "Messenger Users for Group " + lstr);
                     for (GroupUser lGroupuser : lGroup.Users) {
                         lPlayer.sendMessage(ChatColor.DARK_GRAY.toString() + lGroupuser.Name);
@@ -43,4 +41,6 @@ public class CommandMessengerListgroupusers implements CommandExecutor{
         return true;
     }
 
+    protected MessageManager fMessageManager;    
+    
 }

@@ -4,6 +4,7 @@
  */
 package com.mahn42.bart4223.messenger;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,52 +18,32 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerListener implements Listener{
 
-   protected Messenger fMessenger;
-    
-   public PlayerListener(Messenger aThis) {
-       fMessenger = aThis;
+   public PlayerListener(MessageManager aMessageManager) {
+       fMessageManager = aMessageManager;
    }    
    
    @EventHandler
    public void playerLogin(PlayerJoinEvent event) {
      String lFromPlayer = "";
      Player lPlayer = event.getPlayer();
-     MessageDBSet lDB = fMessenger.getDB();
-     ArrayList<Message> lMsgs = lDB.getPlayerMessages(lPlayer.getName());
+     SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+     ArrayList<Message> lMsgs = fMessageManager.getPlayerMessages(lPlayer.getName());
      for (Message lMsg : lMsgs) {
         if (!lFromPlayer.equals(lMsg.Sender)) {
             lPlayer.sendMessage(ChatColor.GRAY.toString() + "Message(s) from " + lMsg.Sender);
             lFromPlayer = lMsg.Sender;
         }
+        lPlayer.sendMessage(ChatColor.DARK_GRAY.toString() + lSdf.format(lMsg.Timestamp));
         if (lMsg.Text.startsWith("&")) {
-            lPlayer.sendMessage(GetChatColor(lMsg.Text) + (lMsg.Text.substring(2)));
+            lPlayer.sendMessage(fMessageManager.GetChatColor(lMsg.Text) + (lMsg.Text.substring(2)));
         }
-        else lPlayer.sendMessage(lMsg.Text);
+        else {
+            lPlayer.sendMessage(lMsg.Text);
+        }
      }
-     lDB.removePlayerMessages(lPlayer.getName());
-     lDB.save();
+     fMessageManager.removePlayerMessages(lPlayer.getName());
    }
 
-   protected ChatColor GetChatColor(String aMsg) {
-     if (aMsg.startsWith("&1"))
-     return ChatColor.BLUE;       
-     else if (aMsg.startsWith("&2"))
-     return ChatColor.RED;       
-     else if (aMsg.startsWith("&3"))
-     return ChatColor.GREEN;       
-     else if (aMsg.startsWith("&4"))
-     return ChatColor.YELLOW;       
-     else if (aMsg.startsWith("&5"))
-     return ChatColor.GOLD;       
-     else if (aMsg.startsWith("&6"))
-     return ChatColor.WHITE;       
-     else if (aMsg.startsWith("&7"))
-     return ChatColor.GRAY;       
-     else if (aMsg.startsWith("&8"))
-     return ChatColor.DARK_AQUA;       
-     else if (aMsg.startsWith("&9"))
-     return ChatColor.DARK_PURPLE;       
-     else return ChatColor.WHITE;  
-   }
-   
+   protected MessageManager fMessageManager;
+       
 }

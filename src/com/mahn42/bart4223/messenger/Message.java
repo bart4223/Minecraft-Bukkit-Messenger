@@ -12,10 +12,12 @@ public class Message implements Comparable<Message>{
 
     public String Sender;
     public String Text;
+    public long Timestamp;
 
-    public Message(String aSender, String aText ){
+    public Message(String aSender, String aText, long aTimestamp){
         Sender = aSender;
         Text = aText;
+        Timestamp = aTimestamp;
     }    
     
     @Override

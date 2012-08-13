@@ -7,12 +7,16 @@ commands:
    messenger_send:
       description: Send Message to offline Player
       usage: /messenger_send
+      aliases: msgs
    messenger_recall:
       description: Recall Message to offline Player
-      usage: /messenger_recall      
+      usage: /messenger_recall
+      aliases: msgr
    messenger_listgroups:
       description: List messenger groups 
-      usage: /messenger_listgroups 
+      usage: /messenger_listgroups
+      aliases: msglg
    messenger_listgroupusers:
       description: List messenger group users 
-      usage: /messenger_listgroupusers 
+      usage: /messenger_listgroupusers
+      aliases: msglgu

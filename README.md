@@ -43,6 +43,7 @@ Gruppen
 -------
 In der groups.yml können verschiedene Gruppen und deren zugehörigen Spieler eingetragen werden.
 Ein Beispiel hierfür ist:
+
     Groups:
      - Name: ABC
        Users:

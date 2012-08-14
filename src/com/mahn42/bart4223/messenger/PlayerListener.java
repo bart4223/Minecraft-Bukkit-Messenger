@@ -26,7 +26,7 @@ public class PlayerListener implements Listener{
    public void playerLogin(PlayerJoinEvent event) {
      String lFromPlayer = "";
      Player lPlayer = event.getPlayer();
-     SimpleDateFormat lSdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+     SimpleDateFormat lSdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
      ArrayList<Message> lMsgs = fMessageManager.getPlayerMessages(lPlayer.getName());
      for (Message lMsg : lMsgs) {
         if (!lFromPlayer.equals(lMsg.Sender)) {

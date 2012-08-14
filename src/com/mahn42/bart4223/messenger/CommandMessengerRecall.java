@@ -4,6 +4,7 @@
  */
 package com.mahn42.bart4223.messenger;
 
+import com.mahn42.framework.Framework;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,16 +44,17 @@ public class CommandMessengerRecall implements CommandExecutor {
                     break;
                 }
             }
+            com.mahn42.framework.Messenger lMessenger = Framework.plugin.getMessenger();
             if (lRecipientGrp.length() != 0) {
-                fMessageManager.removePlayerMessagesFrom(lPlayer.getName(), lRecipientGrp);
+                lMessenger.recallGroupMessages(lPlayer.getName(), lRecipientGrp);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "Messages recalled from group " + lRecipientGrp + "...");
             }
             else if (lRecipient.equals("all")) {
-                fMessageManager.removePlayerMessagesFrom(lPlayer.getName());
+                lMessenger.recallPlayerMessages(lPlayer.getName());
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "All Messages recalled...");
             }
             else if (!lRecipient.equals("?")) {
-                fMessageManager.removePlayerMessagesFrom(lPlayer.getName(),lRecipient);
+                lMessenger.recallPlayerMessages(lPlayer.getName(), lRecipient);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "All Messages to " + lRecipient + " recalled...");
             }
         }

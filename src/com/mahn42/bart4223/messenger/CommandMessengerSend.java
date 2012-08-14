@@ -50,8 +50,9 @@ public class CommandMessengerSend implements CommandExecutor {
                     }
                 }
             }
+            com.mahn42.framework.Messenger lMessenger = Framework.plugin.getMessenger();
             if (lRecipientGrp.length() != 0) {
-                fMessageManager.SendMessageToGroup(lPlayer.getName(), lRecipientGrp, lMsg);
+                lMessenger.sendGroupMessage(lPlayer.getName(), lRecipientGrp, lMsg);
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to group " + lRecipientGrp + "...");
             }
             else if (lRecipient.equals("all")) {
@@ -59,7 +60,7 @@ public class CommandMessengerSend implements CommandExecutor {
                 lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to all...");
             }
             else if (!lRecipient.equals("?")) {
-                boolean lOK = fMessageManager.SendMessage(lPlayer.getName(), lRecipient, lMsg);
+                boolean lOK = lMessenger.sendPlayerMessage(lPlayer.getName(), lRecipient, lMsg);
                 if (lOK) {
                     lPlayer.sendMessage(ChatColor.GREEN.toString() + "Message sent to " + lRecipient + "...");
                 }

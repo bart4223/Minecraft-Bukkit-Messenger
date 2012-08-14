@@ -34,25 +34,30 @@ public class MessageManager implements Messenger{
     }
         
     @Override
-    public void sendPlayerMessage(String aFromPlayer, String aToPlayerName, String aMessage) {
-        SendMessage(aFromPlayer, aToPlayerName, aMessage);
+    public boolean sendPlayerMessage(String aFromPlayer, String aToPlayerName, String aMessage) {
+        return SendMessage(aFromPlayer, aToPlayerName, aMessage);
     }
 
     @Override
-    public void sendGroupMessage(String aFromPlayer, String aToGroupName, String aMessage) {
-        SendMessageToGroup(aFromPlayer, aToGroupName, aMessage);
+    public boolean sendGroupMessage(String aFromPlayer, String aToGroupName, String aMessage) {
+        return SendMessageToGroup(aFromPlayer, aToGroupName, aMessage);
     }
 
     @Override
-    public void recallPlayerMessages(String aFromPlayer, String aToPlayerName) {
-        removePlayerMessagesFrom(aFromPlayer, aToPlayerName);
+    public boolean recallPlayerMessages(String aFromPlayer, String aToPlayerName) {
+        return removePlayerMessagesFrom(aFromPlayer, aToPlayerName);
     }
 
     @Override
-    public void recallGroupMessages(String aFromPlayer, String aToGroupName) {
-        removePlayerMessagesFromGroup(aFromPlayer, aToGroupName);
+    public boolean recallGroupMessages(String aFromPlayer, String aToGroupName) {
+        return removePlayerMessagesFromGroup(aFromPlayer, aToGroupName);
     }
     
+    @Override
+    public boolean recallPlayerMessages(String aFromPlayer) {
+        return removePlayerMessagesFrom(aFromPlayer);
+    }
+
     public boolean VerifyRecipient(String aRecipient) {
         boolean lOK = aRecipient.equals("@all");
         if (!lOK && aRecipient.startsWith("@")) {
@@ -146,34 +151,43 @@ public class MessageManager implements Messenger{
         }
     }
 
-    public void removePlayerMessagesFrom(String aSender) {
+    public boolean removePlayerMessagesFrom(String aSender) {
+        boolean lOK = false;
         for (Iterator<MessageDBRecord> it = fMDB.iterator(); it.hasNext();) {
             MessageDBRecord lMsgDB = it.next();
             if (aSender.equals(lMsgDB.Sender)) {
                 it.remove();
+                lOK = true;
             }
         }
+        return lOK;
     }
 
-    public void removePlayerMessagesFrom(String aSender, String aRecipient) {
+    public boolean removePlayerMessagesFrom(String aSender, String aRecipient) {
+        boolean lOK = false;
         for (Iterator<MessageDBRecord> it = fMDB.iterator(); it.hasNext();) {
             MessageDBRecord lMsgDB = it.next();
             if (aSender.equals(lMsgDB.Sender) && aRecipient.equals(lMsgDB.Recipient)) {
                 it.remove();
+                lOK = true;
             }
         }
+        return lOK;
     }   
     
-    public void removePlayerMessagesFromGroup(String aSender, String aGroup) {
+    public boolean removePlayerMessagesFromGroup(String aSender, String aGroup) {
+        boolean lOK = false;
         Group lGroup = GetGroup(aGroup);
         for (GroupUser lGroupuser : lGroup.Users) {
             for (Iterator<MessageDBRecord> it = fMDB.iterator(); it.hasNext();) {
                 MessageDBRecord lMsgDB = it.next();
                 if (aSender.equals(lMsgDB.Sender) && lGroupuser.Name.equals(lMsgDB.Recipient)) {
                     it.remove();
+                lOK = true;
                 }
             }
         }
+        return lOK;
     }   
 
     public boolean SendMessage(String aSender, String aRecipient, String aMessage) {
@@ -191,18 +205,20 @@ public class MessageManager implements Messenger{
         }
     }
     
-    public void SendMessageToAll(String aSender, String aMessage) {
+    public boolean SendMessageToAll(String aSender, String aMessage) {
         OfflinePlayer[] offPlayers = fPlugin.getServer().getOfflinePlayers();
         for (OfflinePlayer lOffPlayer : offPlayers) {
             SendMessage(aSender, lOffPlayer.getName(), aMessage);
         }
+        return true;
     }
 
-    public void SendMessageToGroup(String aSender, String aGroup, String aMessage) {
+    public boolean SendMessageToGroup(String aSender, String aGroup, String aMessage) {
         Group lGroup = GetGroup(aGroup);
         for (GroupUser lGroupuser : lGroup.Users) {
             SendMessage(aSender, lGroupuser.Name, aMessage);
         }
+        return true;
     }    
     
     protected com.mahn42.bart4223.messenger.Messenger fPlugin; 

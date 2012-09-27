@@ -1,0 +1,11 @@
+Groups:
+ - Name: ABC
+   Users:
+     - anhalter42
+     - Bart4223
+ - Name: DEF
+   Users:
+     - Bart4223
+ - Name: GHI
+   Users:
+     - anhalter42
